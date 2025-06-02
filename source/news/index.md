@@ -71,19 +71,28 @@ document.addEventListener('DOMContentLoaded', function() {
       if (data.update_time) {
         document.getElementById('update-time').innerText = '最后更新: ' + data.update_time;
       }
+      console.log('知乎热榜数据:', data);
       
       let html = '';
       html += '<div class="zhihu-list">';
       var i = 1;
-      for (let item of data.list) {
-        html += '<div class="zhihu-list-item"><div class="zhihu-hotness">' + i + '</div>' + 
-                '<span class="zhihu-title"><a title="' + item.title + '"href="' + item.url + 
-                '" target="_blank" rel="external nofollow noreferrer">' + item.title + '</a></span>' + 
-                '<div class="zhihu-hot"><span>' + item.hot + '</span></div></div>';
-        i++;
+      console.log('开始生成列表HTML, data.list:', data.list);
+      if (data.list && Array.isArray(data.list)) {
+        for (let item of data.list) {
+          console.log('正在处理 item:', item);
+          html += '<div class="zhihu-list-item"><div class="zhihu-hotness">' + i + '</div>' + 
+                  '<span class="zhihu-title"><a title="' + item.title + '"href="' + item.url + 
+                  '" target="_blank" rel="external nofollow noreferrer">' + item.title + '</a></span>' + 
+                  '<div class="zhihu-hot"><span>' + item.hot + '</span></div></div>';
+          i++;
+        }
+      } else {
+        console.error('data.list 不是一个有效的数组:', data.list);
       }
       html += '</div>';
+      console.log('生成的HTML:', html);
       document.getElementById('zhihu-container').innerHTML = html;
+      console.log('innerHTML 已设置');
     })
     .catch(function(error) {
       console.log('加载知乎热榜数据失败:', error);
