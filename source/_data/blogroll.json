@@ -1,0 +1,24 @@
+{
+    "blogs": [
+        {
+            "title": "新浪新闻",
+            "feed": "https://rsshub.app/sina/news"
+        },
+        {
+            "title": "腾讯新闻",
+            "feed": "https://rsshub.app/tencent/news/society"
+        },
+        {
+            "title": "网易新闻",
+            "feed": "https://rsshub.app/netease/news/rank/whole/3"
+        },
+        {
+            "title": "知乎热榜",
+            "feed": "https://rsshub.app/zhihu/hotlist"
+        },
+        {
+            "title": "微博热搜",
+            "feed": "https://rsshub.app/weibo/search/hot"
+        }
+    ]
+} 
