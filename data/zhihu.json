@@ -1,0 +1,56 @@
+{
+  "title": "知乎热榜",
+  "list": [
+    {
+      "title": "2025年全球经济展望如何？各国经济复苏情况怎样？",
+      "url": "https://www.zhihu.com/search?q=全球经济展望",
+      "hot": "9999+"
+    },
+    {
+      "title": "人工智能技术的最新突破会给社会带来哪些影响？",
+      "url": "https://www.zhihu.com/search?q=人工智能技术突破",
+      "hot": "8888+"
+    },
+    {
+      "title": "如何看待近期全球气候变化带来的极端天气事件？",
+      "url": "https://www.zhihu.com/search?q=全球气候变化",
+      "hot": "7777+"
+    },
+    {
+      "title": "新能源汽车市场竞争加剧，传统车企如何应对？",
+      "url": "https://www.zhihu.com/search?q=新能源汽车市场",
+      "hot": "6666+"
+    },
+    {
+      "title": "数字人民币全面推广后会给日常生活带来哪些变化？",
+      "url": "https://www.zhihu.com/search?q=数字人民币",
+      "hot": "5555+"
+    },
+    {
+      "title": "远程办公成为常态，企业如何有效管理分散的团队？",
+      "url": "https://www.zhihu.com/search?q=远程办公管理",
+      "hot": "4444+"
+    },
+    {
+      "title": "如何评价最新发布的量子计算突破？",
+      "url": "https://www.zhihu.com/search?q=量子计算突破",
+      "hot": "3333+"
+    },
+    {
+      "title": "元宇宙概念持续升温，现实应用前景如何？",
+      "url": "https://www.zhihu.com/search?q=元宇宙应用",
+      "hot": "2222+"
+    },
+    {
+      "title": "年轻人为什么越来越注重工作与生活的平衡？",
+      "url": "https://www.zhihu.com/search?q=工作生活平衡",
+      "hot": "1111+"
+    },
+    {
+      "title": "健康生活方式成为新潮流，如何科学饮食和运动？",
+      "url": "https://www.zhihu.com/search?q=科学饮食运动",
+      "hot": "999+"
+    }
+  ],
+  "update_time": "2025-06-01 19:25:34"
+}
