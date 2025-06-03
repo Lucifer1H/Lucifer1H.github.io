@@ -248,13 +248,24 @@ def save_data(items):
         "update_time": current_time
     }
     
-    os.makedirs('source/_data', exist_ok=True)
-    os.makedirs('public/data', exist_ok=True)
+    # 获取脚本所在的目录
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # 获取项目根目录 (脚本目录的上一级)
+    project_root = os.path.dirname(script_dir)
+
+    source_data_path = os.path.join(project_root, 'source', '_data')
+    public_data_path = os.path.join(project_root, 'public', 'data')
+
+    os.makedirs(source_data_path, exist_ok=True)
+    os.makedirs(public_data_path, exist_ok=True)
     
-    with open('source/_data/zhihu.json', 'w', encoding='utf-8') as f:
+    source_json_path = os.path.join(source_data_path, 'zhihu.json')
+    public_json_path = os.path.join(public_data_path, 'zhihu.json')
+
+    with open(source_json_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     
-    with open('public/data/zhihu.json', 'w', encoding='utf-8') as f:
+    with open(public_json_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     
     print(f"成功获取并保存了{len(items)}条知乎热榜数据")
