@@ -247,6 +247,12 @@ def save_data(items):
         "list": items,
         "update_time": current_time
     }
+
+    print(f"将要保存的数据中的 update_time: {data['update_time']}")
+    if items:
+        print(f"将要保存的数据中的第一条新闻标题: {items[0].get('title', '无标题')}")
+    else:
+        print("将要保存的新闻列表为空")
     
     # 获取脚本所在的目录
     script_dir = os.path.dirname(os.path.abspath(__file__))
