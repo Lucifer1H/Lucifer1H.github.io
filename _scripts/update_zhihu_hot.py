@@ -242,15 +242,16 @@ def save_data(items):
     """保存数据到JSON文件"""
     # current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S') # 这是原来的行
     
-    # --- 新的调试部分 ---
-    raw_datetime_now = datetime.now()
-    print(f"DEBUG: datetime.now() object is: {raw_datetime_now}") # 打印原始datetime对象
-    
-    formatted_current_time = raw_datetime_now.strftime('%Y-%m-%d %H:%M:%S')
-    print(f"DEBUG: Formatted current_time directly from strftime: {formatted_current_time}") # 打印格式化后的时间
-    # --- 结束新的调试部分 ---
+    # # --- 新的调试部分 ---
+    # raw_datetime_now = datetime.now()
+    # print(f"DEBUG: datetime.now() object is: {raw_datetime_now}") # 打印原始datetime对象
+    # 
+    # formatted_current_time = raw_datetime_now.strftime('%Y-%m-%d %H:%M:%S')
+    # print(f"DEBUG: Formatted current_time directly from strftime: {formatted_current_time}") # 打印格式化后的时间
+    # # --- 结束新的调试部分 ---
 
-    current_time = formatted_current_time # 使用我们刚刚调试打印的值
+    # current_time = formatted_current_time # 使用我们刚刚调试打印的值
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S') # 恢复原始行
     
     data = {
         "title": "知乎热榜",
@@ -259,11 +260,11 @@ def save_data(items):
     }
 
     # 这是之前的调试打印，现在应该会和上面的 formatted_current_time 一致
-    print(f"将要保存的数据中的 update_time: {data['update_time']}") 
-    if items:
-        print(f"将要保存的数据中的第一条新闻标题: {items[0].get('title', '无标题')}")
-    else:
-        print("将要保存的新闻列表为空")
+    # print(f"将要保存的数据中的 update_time: {data['update_time']}") 
+    # if items:
+    #     print(f"将要保存的数据中的第一条新闻标题: {items[0].get('title', '无标题')}")
+    # else:
+    #     print("将要保存的新闻列表为空")
     
     # 获取脚本所在的目录
     script_dir = os.path.dirname(os.path.abspath(__file__))
