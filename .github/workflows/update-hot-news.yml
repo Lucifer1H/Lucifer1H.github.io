@@ -34,19 +34,36 @@ jobs:
           echo "Runner current date (YYYY-MM-DD HH:MM:SS) is: $(date +'%Y-%m-%d %H:%M:%S')"
 
       - name: 更新知乎热榜
-        run: |
-          python _scripts/update_zhihu_hot.py
+        run: python _scripts/update_zhihu_hot.py
         continue-on-error: true  # 即使脚本失败也继续执行
-          
-      - name: 提交更改
+
+      - name: Configure Git
         run: |
           git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.name "github-actions[bot]"
+        shell: bash
+
+      - name: Pull latest changes
+        run: git pull origin main
+        shell: bash
+
+      - name: Commit and push changes
+        run: |
           git add source/_data/zhihu.json
-          git diff --staged --quiet || git commit -m "自动更新热榜数据 $(date +'%Y-%m-%d %H:%M:%S')"
-          
-      - name: 推送更改
+          # Check if there are changes to commit
+          if ! git diff --staged --quiet; then
+            git commit -m "自动更新热榜数据 $(date +'%Y-%m-%d %H:%M:%S')"
+          else
+            echo "No changes to commit."
+            # If there are no changes to commit, we might not need to push.
+            # However, the push action might handle this, or we might want to ensure
+            # a push happens even if it's just to confirm the workflow ran.
+            # For now, let's proceed to the push step regardless.
+          fi
+        shell: bash
+
+      - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }} 
+          branch: main 
