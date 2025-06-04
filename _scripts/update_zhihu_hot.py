@@ -97,7 +97,7 @@ def get_zhihu_hot():
     if whyapi_items:
         save_data(whyapi_items)
         return
-
+    
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -188,7 +188,7 @@ def get_zhihu_hot():
                     
                     hot_match = re.search(r'(\d+(\.\d+)?[万亿]?热度)', hot)
                     hot_value = hot_match.group(1) if hot_match else hot
-
+                    
                     hot_items.append({
                         "title": title,
                         "url": url,
@@ -240,53 +240,44 @@ def get_zhihu_hot():
 
 def save_data(items):
     """保存数据到JSON文件"""
-    # current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S') # 这是原来的行
-    
-    # # --- 新的调试部分 ---
-    # raw_datetime_now = datetime.now()
-    # print(f"DEBUG: datetime.now() object is: {raw_datetime_now}") # 打印原始datetime对象
-    # 
-    # formatted_current_time = raw_datetime_now.strftime('%Y-%m-%d %H:%M:%S')
-    # print(f"DEBUG: Formatted current_time directly from strftime: {formatted_current_time}") # 打印格式化后的时间
-    # # --- 结束新的调试部分 ---
-
-    # current_time = formatted_current_time # 使用我们刚刚调试打印的值
-    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S') # 恢复原始行
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     
     data = {
         "title": "知乎热榜",
         "list": items,
-        "update_time": current_time 
+        "update_time": current_time
     }
-
-    # 这是之前的调试打印，现在应该会和上面的 formatted_current_time 一致
-    # print(f"将要保存的数据中的 update_time: {data['update_time']}") 
-    # if items:
-    #     print(f"将要保存的数据中的第一条新闻标题: {items[0].get('title', '无标题')}")
-    # else:
-    #     print("将要保存的新闻列表为空")
     
-    # 获取脚本所在的目录
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    # 获取项目根目录 (脚本目录的上一级)
     project_root = os.path.dirname(script_dir)
 
-    source_data_path = os.path.join(project_root, 'source', '_data')
-    public_data_path = os.path.join(project_root, 'public', 'data')
+    # Path for Hexo's data object (site.data.zhihu)
+    hexo_data_dir = os.path.join(project_root, 'source', '_data')
+    # Path for the static file to be served at /data/zhihu.json
+    # Hexo will copy source/data/zhihu.json to public/data/zhihu.json
+    static_source_data_dir = os.path.join(project_root, 'source', 'data')
 
-    os.makedirs(source_data_path, exist_ok=True)
-    os.makedirs(public_data_path, exist_ok=True)
+    os.makedirs(hexo_data_dir, exist_ok=True)
+    os.makedirs(static_source_data_dir, exist_ok=True) # Ensure source/data directory exists
     
-    source_json_path = os.path.join(source_data_path, 'zhihu.json')
-    public_json_path = os.path.join(public_data_path, 'zhihu.json')
+    hexo_data_json_path = os.path.join(hexo_data_dir, 'zhihu.json')
+    static_source_json_path = os.path.join(static_source_data_dir, 'zhihu.json')
 
-    with open(source_json_path, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-    
-    with open(public_json_path, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-    
-    print(f"成功获取并保存了{len(items)}条知乎热榜数据")
+    try:
+        with open(hexo_data_json_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        print(f"数据成功保存到: {hexo_data_json_path}")
+
+        with open(static_source_json_path, 'w', encoding='utf-8') as f: 
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        print(f"数据成功保存到: {static_source_json_path}")
+        
+        print(f"成功获取并保存了{len(items)}条知乎热榜数据")
+
+    except IOError as e:
+        print(f"保存文件时出错: {e}")
+    except Exception as e:
+        print(f"保存数据时发生未知错误: {e}")
 
 def generate_mock_data():
     """生成模拟数据"""
