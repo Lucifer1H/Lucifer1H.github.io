@@ -265,14 +265,14 @@ def save_data(items):
 
     try:
         with open(hexo_data_json_path, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
+        json.dump(data, f, ensure_ascii=False, indent=2)
         print(f"数据成功保存到: {hexo_data_json_path}")
-
+    
         with open(static_source_json_path, 'w', encoding='utf-8') as f: 
-            json.dump(data, f, ensure_ascii=False, indent=2)
+        json.dump(data, f, ensure_ascii=False, indent=2)
         print(f"数据成功保存到: {static_source_json_path}")
-        
-        print(f"成功获取并保存了{len(items)}条知乎热榜数据")
+    
+    print(f"成功获取并保存了{len(items)}条知乎热榜数据")
 
     except IOError as e:
         print(f"保存文件时出错: {e}")
