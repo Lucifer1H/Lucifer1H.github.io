@@ -33,6 +33,9 @@ jobs:
           echo "Runner current date is: $(date)"
           echo "Runner current date (YYYY-MM-DD HH:MM:SS) is: $(date +'%Y-%m-%d %H:%M:%S')"
 
+      - name: Test API Connectivity
+        run: curl -v "https://whyta.cn/api/zhihu?key=36de5db81215"
+        
       - name: 更新知乎热榜
         run: python _scripts/update_zhihu_hot.py
         continue-on-error: true  # 即使脚本失败也继续执行

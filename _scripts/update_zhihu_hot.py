@@ -12,13 +12,14 @@ from datetime import datetime
 def get_zhihu_hot_from_whyapi():
     print("尝试从WhyAPI获取知乎热榜数据...")
     try:
-        api_key = "36de5db81215" # Your provided API Key
+        api_key = os.environ.get('WHY_API_KEY', "36de5db81215") # Your provided API Key
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         }
         response = requests.get(f'https://whyta.cn/api/zhihu?key={api_key}', headers=headers, timeout=15)
         
         if response.status_code == 200:
+            print(f"DEBUG: WhyAPI raw response: {response.text[:500]}") # 增加调试信息，打印原始响应
             try:
                 api_data_list = response.json()
             except json.JSONDecodeError:
@@ -241,13 +242,13 @@ def get_zhihu_hot():
 def save_data(items):
     """保存数据到JSON文件"""
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    
+
     data = {
         "title": "知乎热榜",
         "list": items,
         "update_time": current_time
     }
-    
+
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(script_dir)
 
@@ -259,20 +260,22 @@ def save_data(items):
 
     os.makedirs(hexo_data_dir, exist_ok=True)
     os.makedirs(static_source_data_dir, exist_ok=True) # Ensure source/data directory exists
-    
+
     hexo_data_json_path = os.path.join(hexo_data_dir, 'zhihu.json')
     static_source_json_path = os.path.join(static_source_data_dir, 'zhihu.json')
 
     try:
+        # 写入第一个文件
         with open(hexo_data_json_path, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+            json.dump(data, f, ensure_ascii=False, indent=2)
         print(f"数据成功保存到: {hexo_data_json_path}")
-    
-        with open(static_source_json_path, 'w', encoding='utf-8') as f: 
-        json.dump(data, f, ensure_ascii=False, indent=2)
+
+        # 写入第二个文件
+        with open(static_source_json_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
         print(f"数据成功保存到: {static_source_json_path}")
-    
-    print(f"成功获取并保存了{len(items)}条知乎热榜数据")
+
+        print(f"成功获取并保存了{len(items)}条知乎热榜数据")
 
     except IOError as e:
         print(f"保存文件时出错: {e}")
