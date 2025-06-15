@@ -47,10 +47,6 @@
 }
 </style>
 
-<div class="markdown-body">
-  <%- page.content %>
-</div>
-
 <% if (site.data.zhihu) { %>
   <h2><%= site.data.zhihu.title %></h2>
   <p id="update-time">最后更新: <%= site.data.zhihu.update_time %></p>
@@ -70,4 +66,8 @@
   </div>
 <% } else { %>
   <p>暂无热榜数据。</p>
-<% } %> 
+<% } %>
+
+<div class="markdown-body">
+  <%- page.content %>
+</div> 
