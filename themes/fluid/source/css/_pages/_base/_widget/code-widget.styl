@@ -18,6 +18,8 @@
 
 .copy-btn
   cursor pointer
+  -webkit-user-select none
+  -ms-user-select none
   user-select none
   -webkit-appearance none
   outline none
@@ -34,3 +36,11 @@
 
 .markdown-body pre:hover > .copy-btn, .markdown-body pre:not(:hover) > .copy-btn
   outline none
+
+.code-widget
+  .code-copy
+    -webkit-user-select none
+    -ms-user-select none
+    user-select none
+    i
+      color: var(--code-fn-color)
