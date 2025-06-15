@@ -479,7 +479,7 @@ footer:
 index:
   # 首页 Banner 头图，可以是相对路径或绝对路径，以下相同
   # Path of Banner image, can be a relative path or an absolute path, the same on other pages
-  banner_img: /img/default.png
+  banner_img: https://cdn.jsdelivr.net/gh/Lucifer1H/my-blog-images/default.png
 
   # 头图高度，屏幕百分比
   # Height ratio of banner image
@@ -551,7 +551,7 @@ index:
 # Post Page
 #---------------------------
 post:
-  banner_img: /img/default.png
+  banner_img: https://cdn.jsdelivr.net/gh/Lucifer1H/my-blog-images/default.png
   banner_img_height: 70
   banner_mask_alpha: 0.3
 
@@ -915,7 +915,7 @@ discuss:
 # Archive Page
 #---------------------------
 archive:
-  banner_img: /img/default.png
+  banner_img: https://cdn.jsdelivr.net/gh/Lucifer1H/my-blog-images/default.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -926,7 +926,7 @@ archive:
 #---------------------------
 category:
   enable: true
-  banner_img: /img/default.png
+  banner_img: https://cdn.jsdelivr.net/gh/Lucifer1H/my-blog-images/default.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -972,10 +972,16 @@ tag:
 #---------------------------
 about:
   enable: true
-  banner_img: /img/default.png
+  banner_img: https://cdn.jsdelivr.net/gh/Lucifer1H/my-blog-images/default.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
-  avatar: /img/Lucifer_H.png
+  # 头像
+  # Avatar
+  avatar: https://cdn.jsdelivr.net/gh/Lucifer1H/my-blog-images/avatar.png
+  # 社交图标
+  # Social Icons
+  social_links:
+    enable: true
   name: "Lucifer_H"
   intro: "个人博客博主 未来的工程师"
   # 更多图标可从 https://hexo.fluid-dev.com/docs/icon/ 查找，`class` 代表图标的 css class，添加 `qrcode` 后，图标不再是链接而是悬浮二维码
