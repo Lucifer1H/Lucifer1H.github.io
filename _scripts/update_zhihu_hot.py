@@ -254,27 +254,13 @@ def save_data(items):
 
     # Path for Hexo's data object (site.data.zhihu)
     hexo_data_dir = os.path.join(project_root, 'source', '_data')
-    # Path for the static file to be served at /data/zhihu.json
-    # Hexo will copy source/data/zhihu.json to public/data/zhihu.json
-    static_source_data_dir = os.path.join(project_root, 'source', 'data')
-
     os.makedirs(hexo_data_dir, exist_ok=True)
-    os.makedirs(static_source_data_dir, exist_ok=True) # Ensure source/data directory exists
-
     hexo_data_json_path = os.path.join(hexo_data_dir, 'zhihu.json')
-    static_source_json_path = os.path.join(static_source_data_dir, 'zhihu.json')
 
     try:
-        # 写入第一个文件
         with open(hexo_data_json_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
         print(f"数据成功保存到: {hexo_data_json_path}")
-
-        # 写入第二个文件
-        with open(static_source_json_path, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
-        print(f"数据成功保存到: {static_source_json_path}")
-
         print(f"成功获取并保存了{len(items)}条知乎热榜数据")
 
     except IOError as e:

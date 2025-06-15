@@ -51,9 +51,6 @@ jobs:
       - name: Commit and push changes
         run: |
           git add source/_data/zhihu.json
-          git add source/data/zhihu.json
-          # Alternatively, to catch both and any other changes under source/ more broadly:
-          # git add source/
           
           # Check if there are changes to commit
           if ! git diff --staged --quiet; then
