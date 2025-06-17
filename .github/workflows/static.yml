@@ -2,11 +2,10 @@
 name: Build and Deploy Hexo to Pages
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
+  workflow_run:
+    workflows: ["更新热榜数据"] # update-hot-news.yml 的 name 字段
+    types:
+      - completed
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
