@@ -479,7 +479,7 @@ footer:
 index:
   # 首页 Banner 头图，可以是相对路径或绝对路径，以下相同
   # Path of Banner image, can be a relative path or an absolute path, the same on other pages
-  banner_img: https://cdn.jsdelivr.net/gh/Lucifer1H/my-blog-images/default.png
+  banner_img: /img/default.png
 
   # 头图高度，屏幕百分比
   # Height ratio of banner image
@@ -551,7 +551,7 @@ index:
 # Post Page
 #---------------------------
 post:
-  banner_img: https://cdn.jsdelivr.net/gh/Lucifer1H/my-blog-images/default.png
+  banner_img: /img/default.png
   banner_img_height: 70
   banner_mask_alpha: 0.3
 
@@ -915,7 +915,7 @@ discuss:
 # Archive Page
 #---------------------------
 archive:
-  banner_img: https://cdn.jsdelivr.net/gh/Lucifer1H/my-blog-images/default.png
+  banner_img: /img/default.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -926,7 +926,7 @@ archive:
 #---------------------------
 category:
   enable: true
-  banner_img: https://cdn.jsdelivr.net/gh/Lucifer1H/my-blog-images/default.png
+  banner_img: /img/default.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -956,7 +956,7 @@ category:
 tag:
   enable: true
   banner_img: /img/default.png
-  banner_img_height: 80
+  banner_img_height: 60
   banner_mask_alpha: 0.3
   tagcloud:
     min_font: 15
@@ -972,12 +972,12 @@ tag:
 #---------------------------
 about:
   enable: true
-  banner_img: https://cdn.jsdelivr.net/gh/Lucifer1H/my-blog-images/default.png
+  banner_img: /img/default.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
   # 头像
   # Avatar
-  avatar: https://cdn.jsdelivr.net/gh/Lucifer1H/my-blog-images/avatar.png
+  avatar: /img/avatar.png
   # 社交图标
   # Social Icons
   social_links:
@@ -1012,7 +1012,7 @@ page:
 page404:
   enable: true
   banner_img: /img/default.png
-  banner_img_height: 85
+  banner_img_height: 60
   banner_mask_alpha: 0.3
   # 重定向到首页的延迟(毫秒)
   # Delay in redirecting to home page (milliseconds)
@@ -1026,7 +1026,7 @@ page404:
 links:
   enable: true
   banner_img: /img/default.png
-  banner_img_height: 60
+  banner_img_height: 85
   banner_mask_alpha: 0.3
   # 友链的成员项
   # Member item of page
