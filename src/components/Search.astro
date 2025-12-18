@@ -16,13 +16,29 @@
     <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
     <script src="/pagefind/pagefind-ui.js" is:inline></script>
     <script is:inline>
-      window.addEventListener('DOMContentLoaded', () => {
-        new PagefindUI({ 
-          element: "#search", 
-          showSubResults: true,
-          showImages: false 
-        });
-      });
+      // Wrap in a function to run when DOM is ready
+      function initPagefind() {
+        if (typeof PagefindUI !== 'undefined') {
+          console.log("Initializing Pagefind UI");
+          // Clear any existing instance if re-running
+          const searchData = document.querySelector('#search');
+          if (searchData) searchData.innerHTML = '';
+          
+          new PagefindUI({ 
+            element: "#search", 
+            showSubResults: true,
+            showImages: false 
+          });
+        } else {
+          console.error("PagefindUI is undefined");
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        window.addEventListener('DOMContentLoaded', initPagefind);
+      } else {
+        initPagefind();
+      }
     </script>
   </>
 )}
