@@ -1,0 +1,49 @@
+<div id="search" class="ml-4"></div>
+
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+<script src="/pagefind/pagefind-ui.js" is:inline></script>
+
+<script is:inline>
+  window.addEventListener('DOMContentLoaded', () => {
+    new PagefindUI({ 
+      element: "#search", 
+      showSubResults: true,
+      showImages: false 
+    });
+  });
+</script>
+
+<style is:global>
+  /* Customizing Pagefind UI to match the theme */
+  .pagefind-ui__search-input {
+    @apply bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all w-48 focus:w-64 !important;
+  }
+  
+  .pagefind-ui__search-clear {
+    @apply text-gray-500 dark:text-gray-400 !important;
+  }
+
+  .pagefind-ui__drawer {
+    @apply bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-xl rounded-xl mt-2 overflow-hidden !important;
+  }
+
+  .pagefind-ui__result {
+    @apply border-b border-gray-100 dark:border-gray-800 p-4 !important;
+  }
+
+  .pagefind-ui__result:hover {
+    @apply bg-gray-50 dark:bg-gray-800/50 !important;
+  }
+
+  .pagefind-ui__result-title {
+    @apply font-bold text-gray-900 dark:text-gray-100 !important;
+  }
+
+  .pagefind-ui__result-excerpt {
+    @apply text-sm text-gray-600 dark:text-gray-400 !important;
+  }
+  
+  .pagefind-ui__message {
+    @apply text-gray-500 dark:text-gray-400 p-4 !important;
+  }
+</style>
