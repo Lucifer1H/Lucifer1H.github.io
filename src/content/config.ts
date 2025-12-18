@@ -17,4 +17,14 @@ const blog = defineCollection({
     })),
 });
 
-export const collections = { blog };
+const resources = defineCollection({
+    schema: z.object({
+        title: z.string(),
+        description: z.string(),
+        link: z.string().url(),
+        icon: z.string().optional(), // Emoji or image path
+        tags: z.array(z.string()).default([]),
+    }),
+});
+
+export const collections = { blog, resources };
