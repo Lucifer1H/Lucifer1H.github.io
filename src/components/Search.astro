@@ -184,22 +184,36 @@
 
   /* Make sure form has relative positioning for the icon */
   /* Make sure form has relative positioning for the icon */
+  /* Make sure form has relative positioning for the icon */
   #search-container .pagefind-ui__form {
     @apply relative flex-1 w-full;
   }
   
-  /* Enforce vertical stacking for the main container */
-  #search-container .pagefind-ui {
-    @apply flex flex-col gap-4 w-full;
-    display: flex !important;
+  /* Nuclear option layout reset with high specificity */
+  body #search-container .pagefind-ui {
+    display: block !important;
+    grid-template-columns: none !important;
+    grid-template-rows: none !important;
     flex-direction: column !important;
   }
 
-  /* Reset drawer positioning to flow naturally in the flex column */
-  #search-container .pagefind-ui__drawer {
-    @apply border-t border-gray-100 dark:border-gray-800 mt-4 max-h-[60vh] overflow-y-auto w-full;
-    position: static !important; /* Override potential absolute positioning */
+  body #search-container .pagefind-ui__form {
+    display: flex !important; /* Keep flex for input+cancel alignment */
     width: 100% !important;
+    position: relative !important;
+    flex-wrap: nowrap !important;
+  }
+
+  body #search-container .pagefind-ui__drawer {
+    display: block !important;
+    width: 100% !important;
+    position: static !important;
+    margin-top: 16px !important;
+    clear: both !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    @apply border-t border-gray-100 dark:border-gray-800 max-h-[60vh] overflow-y-auto;
   }
 
   /* Hide default clear button */
