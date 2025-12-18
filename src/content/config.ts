@@ -23,6 +23,7 @@ const resources = defineCollection({
         description: z.string(),
         link: z.string(),
         icon: z.string().optional(), // Emoji or image path
+        cover: z.string().optional(), // Cover image path
         tags: z.array(z.string()).default([]),
     }),
 });
