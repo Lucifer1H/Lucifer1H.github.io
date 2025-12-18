@@ -1,17 +1,31 @@
-<div id="search" class="ml-4"></div>
+{import.meta.env.DEV ? (
+  <div class="ml-4 relative">
+    <input 
+      type="text" 
+      placeholder="Search (Preview Only)..." 
+      disabled
+      class="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 placeholder-gray-500 rounded-full px-4 py-2 text-sm w-48 cursor-not-allowed"
+    />
+  </div>
+) : (
+  <div id="search" class="ml-4"></div>
+)}
 
-<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
-<script src="/pagefind/pagefind-ui.js" is:inline></script>
-
-<script is:inline>
-  window.addEventListener('DOMContentLoaded', () => {
-    new PagefindUI({ 
-      element: "#search", 
-      showSubResults: true,
-      showImages: false 
-    });
-  });
-</script>
+{ !import.meta.env.DEV && (
+  <>
+    <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+    <script src="/pagefind/pagefind-ui.js" is:inline></script>
+    <script is:inline>
+      window.addEventListener('DOMContentLoaded', () => {
+        new PagefindUI({ 
+          element: "#search", 
+          showSubResults: true,
+          showImages: false 
+        });
+      });
+    </script>
+  </>
+)}
 
 <style is:global>
   @reference "../styles/global.css";
