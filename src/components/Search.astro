@@ -113,11 +113,35 @@
 
           // Wait for DOM to update then modify form
           setTimeout(() => {
+            // === NUCLEAR LAYOUT FIX: Force vertical layout via inline styles ===
+            const pagefindUI = document.querySelector('.pagefind-ui');
+            if (pagefindUI) {
+              pagefindUI.style.display = 'block';
+              pagefindUI.style.gridTemplateColumns = 'none';
+              pagefindUI.style.gridTemplateRows = 'none';
+            }
+
+            const drawer = document.querySelector('.pagefind-ui__drawer');
+            if (drawer) {
+              drawer.style.display = 'block';
+              drawer.style.width = '100%';
+              drawer.style.position = 'static';
+              drawer.style.marginTop = '16px';
+              drawer.style.clear = 'both';
+              drawer.style.left = 'auto';
+              drawer.style.top = 'auto';
+              drawer.style.transform = 'none';
+            }
+            // === END NUCLEAR LAYOUT FIX ===
+
             const forms = document.querySelectorAll('.pagefind-ui__form');
             forms.forEach(form => {
               form.style.display = 'flex';
               form.style.alignItems = 'center';
               form.style.gap = '8px';
+              form.style.width = '100%';
+              form.style.position = 'relative';
+              form.style.flexWrap = 'nowrap';
 
               // Check if cancel btn already exists
               if (!form.querySelector('.custom-cancel-btn')) {
