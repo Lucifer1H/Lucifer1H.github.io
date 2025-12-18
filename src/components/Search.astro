@@ -1,82 +1,123 @@
-{import.meta.env.DEV ? (
-  <div class="ml-4 relative">
-    <input 
-      type="text" 
-      placeholder="Search (Preview Only)..." 
-      disabled
-      class="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 placeholder-gray-500 rounded-full px-4 py-2 text-sm w-48 cursor-not-allowed"
-    />
+{/* Search Trigger Button */}
+<button 
+  id="search-trigger" 
+  class="ml-4 p-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 focus:outline-none transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+  aria-label="Open Search"
+>
+  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+  </svg>
+</button>
+
+{/* Search Modal Overlay */}
+<div id="search-modal" class="fixed inset-0 z-[100] hidden" aria-hidden="true">
+  {/* Backdrop */}
+  <div id="search-backdrop" class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm transition-opacity opacity-0"></div>
+  
+  {/* Modal Content */}
+  <div id="search-content" class="relative w-full max-w-2xl mx-auto mt-20 sm:mt-24 px-4 opacity-0 translate-y-4 transition-all duration-300">
+    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden">
+      
+      {/* Dev Mode Placeholder */}
+      {import.meta.env.DEV && (
+        <div class="p-6 text-center text-gray-500 dark:text-gray-400">
+          <p class="mb-2">🔍 Search is available in production builds.</p>
+          <p class="text-xs opacity-70">(Pagefind requires a static build to generate the index)</p>
+        </div>
+      )}
+
+      {/* Production Search Container */}
+      {!import.meta.env.DEV && <div id="search-container" class="p-4 sm:p-6 min-h-[100px]"></div>}
+      
+    </div>
+    
+    <button id="close-search" class="absolute -top-10 right-4 text-white hover:text-gray-200 sm:hidden">
+      Close
+    </button>
   </div>
-) : (
-  <div id="search" class="ml-4"></div>
-)}
+</div>
 
 { !import.meta.env.DEV && (
   <>
     <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
     <script src="/pagefind/pagefind-ui.js" is:inline></script>
-    <script is:inline>
-      // Wrap in a function to run when DOM is ready
-      function initPagefind() {
-        if (typeof PagefindUI !== 'undefined') {
-          console.log("Initializing Pagefind UI");
-          // Clear any existing instance if re-running
-          const searchData = document.querySelector('#search');
-          if (searchData) searchData.innerHTML = '';
-          
-          new PagefindUI({ 
-            element: "#search", 
-            showSubResults: true,
-            showImages: false 
-          });
-        } else {
-          console.error("PagefindUI is undefined");
-        }
-      }
-
-      if (document.readyState === 'loading') {
-        window.addEventListener('DOMContentLoaded', initPagefind);
-      } else {
-        initPagefind();
-      }
-    </script>
   </>
 )}
+
+<script is:inline>
+  // Logic to handle Modal Open/Close and Animation
+  const trigger = document.getElementById('search-trigger');
+  const modal = document.getElementById('search-modal');
+  const backdrop = document.getElementById('search-backdrop');
+  const content = document.getElementById('search-content');
+  const closeBtn = document.getElementById('close-search');
+
+  function openModal() {
+    modal.classList.remove('hidden');
+    // Small timeout to allow display:block to apply before opacity transition
+    setTimeout(() => {
+      backdrop.classList.remove('opacity-0');
+      content.classList.remove('opacity-0', 'translate-y-4');
+    }, 10);
+    
+    // Focus input if available
+    const input = document.querySelector('.pagefind-ui__search-input');
+    if (input) setTimeout(() => input.focus(), 100);
+  }
+
+  function closeModal() {
+    backdrop.classList.add('opacity-0');
+    content.classList.add('opacity-0', 'translate-y-4');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 300);
+  }
+
+  trigger?.addEventListener('click', openModal);
+  backdrop?.addEventListener('click', closeModal);
+  closeBtn?.addEventListener('click', closeModal);
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeModal();
+    }
+  });
+
+  // Initialize Pagefind
+  if (typeof PagefindUI !== 'undefined') {
+    window.addEventListener('DOMContentLoaded', () => {
+      new PagefindUI({ 
+        element: "#search-container", 
+        showSubResults: true,
+        showImages: false 
+      });
+    });
+  }
+</script>
 
 <style is:global>
   @reference "../styles/global.css";
   
-  /* Customizing Pagefind UI with high specificity to override defaults */
-  #search .pagefind-ui__search-input {
-    @apply bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all w-48 focus:w-64;
-    border-width: 1px;
+  /* Reset and style Pagefind UI for the modal */
+  #search-container .pagefind-ui__search-input {
+    @apply bg-gray-50 dark:bg-gray-800 border-none text-gray-900 dark:text-gray-100 placeholder-gray-400 text-lg w-full rounded-xl px-4 py-4 focus:ring-2 focus:ring-blue-500/50 shadow-inner !important;
   }
   
-  #search .pagefind-ui__search-clear {
-    @apply text-gray-500 dark:text-gray-400;
+  #search-container .pagefind-ui__search-clear {
+    @apply top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 !important;
   }
 
-  #search .pagefind-ui__drawer {
-    @apply bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-xl rounded-xl mt-2 overflow-hidden;
+  #search-container .pagefind-ui__drawer {
+    @apply border-t border-gray-100 dark:border-gray-800 mt-4 max-h-[60vh] overflow-y-auto !important;
   }
 
-  #search .pagefind-ui__result {
-    @apply border-b border-gray-100 dark:border-gray-800 p-4;
+  #search-container .pagefind-ui__result {
+    @apply border-b border-gray-50 dark:border-gray-800/50 py-3 px-2 first:pt-0 !important;
   }
 
-  #search .pagefind-ui__result:hover {
-    @apply bg-gray-50 dark:bg-gray-800/50;
-  }
-
-  #search .pagefind-ui__result-title {
-    @apply font-bold text-gray-900 dark:text-gray-100;
-  }
-
-  #search .pagefind-ui__result-excerpt {
-    @apply text-sm text-gray-600 dark:text-gray-400;
-  }
-  
-  #search .pagefind-ui__message {
-    @apply text-gray-500 dark:text-gray-400 p-4;
+  /* Make mark text (highlighted) nice */
+  #search-container mark {
+    @apply bg-yellow-200 dark:bg-yellow-500/30 text-gray-900 dark:text-gray-100 rounded px-0.5 !important;
   }
 </style>
