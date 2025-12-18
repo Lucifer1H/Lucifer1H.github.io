@@ -1,277 +1,255 @@
-{/* Search Trigger Button */}
+---
+// Font imports removed - relying on global tailwind fonts
+---
+
+{/* Trigger Button */}
 <button 
-  id="search-trigger" 
-  class="ml-4 p-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 focus:outline-none transition-all duration-200 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 active:scale-90"
-  aria-label="Open Search"
+  id="search-trigger"
+  class="ml-4 p-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+  aria-label="Search"
 >
   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
   </svg>
 </button>
 
-{/* Search Modal Overlay */}
-<div id="search-modal" class="fixed inset-0 z-[100] hidden" aria-hidden="true" role="dialog">
-  {/* Backdrop */}
-  <div id="search-backdrop" class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
-  
-  {/* Modal Content */}
-  <div id="search-content" class="relative w-full max-w-2xl mx-auto mt-20 sm:mt-24 px-4 opacity-0 scale-95 transition-all duration-300 ease-out transform">
-    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden">
-      
+{/* Modal Overlay */}
+<dialog 
+  id="search-dialog" 
+  class="fixed inset-0 z-[100] w-full h-full bg-transparent p-0 m-0 backdrop:bg-gray-900/50 backdrop:backdrop-blur-sm"
+>
+  <div class="w-full h-full flex flex-col items-center pt-20 px-4 pointer-events-none">
+    {/* Modal Content - Click events enabled here */}
+    <div 
+      class="w-full max-w-2xl bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden pointer-events-auto transform transition-all scale-95 opacity-0"
+      id="search-content"
+    >
       {/* Dev Mode Placeholder */}
       {import.meta.env.DEV && (
-        <div class="p-6 text-center text-gray-500 dark:text-gray-400">
-          <p class="mb-2">🔍 Search is available in production builds.</p>
-          <p class="text-xs opacity-70">(Pagefind requires a static build to generate the index)</p>
+        <div class="p-8 text-center text-gray-500">
+           Running in Dev Mode. Build for Search.
         </div>
       )}
 
-      {/* Production Search Container */}
-      {!import.meta.env.DEV && <div id="search-container" class="p-4 sm:p-6 min-h-[100px]"></div>}
-      
+      {/* Pagefind Container */}
+      {!import.meta.env.DEV && (
+        <div id="pagefind-root" class="p-4"></div>
+      )}
     </div>
-    
-    <button id="close-search" class="absolute -top-10 right-4 text-white hover:text-gray-200 sm:hidden">
-      Close
-    </button>
   </div>
-</div>
+</dialog>
 
-{ !import.meta.env.DEV && (
+{/* Load Pagefind Assets if Prod */}
+{!import.meta.env.DEV && (
   <>
     <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
     <script src="/pagefind/pagefind-ui.js" is:inline></script>
   </>
 )}
 
-<script is:inline>
-  function setupSearch() {
-    const trigger = document.getElementById('search-trigger');
-    const modal = document.getElementById('search-modal');
-    const backdrop = document.getElementById('search-backdrop');
-    const content = document.getElementById('search-content');
-    const closeBtn = document.getElementById('close-search');
+<script>
+  const dialog = document.getElementById('search-dialog') as HTMLDialogElement;
+  const trigger = document.getElementById('search-trigger');
+  const content = document.getElementById('search-content');
 
-    if (!trigger || !modal) {
-      console.error('Search elements not found');
-      return;
-    }
-
-    function openModal() {
-      console.log('Opening search modal');
-      modal.classList.remove('hidden');
-      // Force reflow
-      void modal.offsetWidth;
-      
-      backdrop.classList.remove('opacity-0');
-      content.classList.remove('opacity-0', 'scale-95');
-      content.classList.add('opacity-100', 'scale-100');
-      
-      // Focus input if available
+  // Open Logic
+  trigger?.addEventListener('click', () => {
+    if (typeof dialog.showModal === 'function') {
+      dialog.showModal();
+      // Animation entry
+      requestAnimationFrame(() => {
+        content?.classList.remove('scale-95', 'opacity-0');
+        content?.classList.add('scale-100', 'opacity-100');
+      });
+      // Focus Input
       setTimeout(() => {
-        const input = document.querySelector('.pagefind-ui__search-input');
+        const input = dialog.querySelector('input');
         if (input) input.focus();
-      }, 100);
+      }, 50);
+    } else {
+      console.warn("Dialog API not supported");
     }
+  });
 
-    function closeModal() {
-      console.log('Closing search modal');
-      backdrop.classList.add('opacity-0');
-      content.classList.remove('opacity-100', 'scale-100');
-      content.classList.add('opacity-0', 'scale-95');
-      
-      setTimeout(() => {
-        modal.classList.add('hidden');
-        // Optional: Clear input on close
-        const input = document.querySelector('.pagefind-ui__search-input');
-        if (input) input.value = '';
-      }, 300);
+  // Close Logic
+  function closeDialog() {
+    content?.classList.remove('scale-100', 'opacity-100');
+    content?.classList.add('scale-95', 'opacity-0');
+    
+    setTimeout(() => {
+      dialog.close();
+      // Clear input on close for fresh start next time
+      const input = dialog.querySelector('input');
+      if (input) input.value = '';
+      // Also clear results if possible (optional)
+    }, 200);
+  }
+
+  // Click backdrop to close
+  dialog?.addEventListener('click', (e) => {
+    const rect = dialog.getBoundingClientRect();
+    // Check if click is on backdrop (dialog itself)
+    if (e.target === dialog) {
+      closeDialog();
     }
+  });
 
-    // Clean up old listeners to prevent duplicates if re-running
-    trigger.onclick = openModal;
-    backdrop.onclick = closeModal;
-    if (closeBtn) closeBtn.onclick = closeModal;
+  // Init Pagefind
+  if (!import.meta.env.DEV && typeof PagefindUI !== 'undefined') {
+    // Wait for DOM
+    document.addEventListener('DOMContentLoaded', () => {
+      new PagefindUI({
+        element: "#pagefind-root",
+        showSubResults: true,
+        showImages: false
+      });
 
-    // Close on Escape key
-    document.onkeydown = (e) => {
-      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-        closeModal();
-      }
-    };
+      // Customize UI after init
+      const checkParams = setInterval(() => {
+        const form = document.querySelector('#pagefind-root .pagefind-ui__form');
+        if (form) {
+          clearInterval(checkParams);
+          
+          // 1. Append Cancel Button
+          const cancelBtn = document.createElement('button');
+          cancelBtn.textContent = 'Cancel';
+          cancelBtn.type = 'button';
+          cancelBtn.className = 'ml-3 text-blue-600 dark:text-blue-400 font-medium text-sm hover:opacity-80';
+          cancelBtn.onclick = (e) => {
+            e.preventDefault();
+            closeDialog();
+          };
+          form.appendChild(cancelBtn);
 
-    // Initialize Pagefind UI if needed
-    if (typeof PagefindUI !== 'undefined') {
-       // Check if already initialized to avoid duplicates
-       const searchContainer = document.getElementById('search-container');
-       if (searchContainer && searchContainer.innerHTML.trim() === '') {
-          new PagefindUI({ 
-            element: "#search-container", 
-            showSubResults: true,
-            showImages: false 
-          });
-
-          // Use MutationObserver to enforce layout and inject elements persistently
-          const observer = new MutationObserver((mutations) => {
-            // 1. Enforce Vertical Layout on Container
-            const pagefindUI = document.querySelector('.pagefind-ui');
-            if (pagefindUI) {
-               pagefindUI.style.display = 'flex';
-               pagefindUI.style.flexDirection = 'column';
-               pagefindUI.style.gap = '1rem';
-            }
-
-            // 2. Fix Drawer (Results) Positioning
-            const drawer = document.querySelector('.pagefind-ui__drawer');
-            if (drawer) {
-               drawer.style.position = 'static';
-               drawer.style.width = '100%';
-               drawer.style.height = 'auto';
-               drawer.style.transform = 'none';
-               drawer.style.order = '10'; // Ensure it stays at bottom
-            }
-
-            // 3. Fix Form and Inject Cancel Button
-            const forms = document.querySelectorAll('.pagefind-ui__form');
-            forms.forEach(form => {
-              form.style.display = 'flex';
-              form.style.alignItems = 'center';
-              form.style.gap = '8px';
-              form.style.width = '100%';
-              form.style.position = 'relative';
-
-              // Inject Cancel Button if missing
-              if (!form.querySelector('.custom-cancel-btn')) {
-                const cancelBtn = document.createElement('button');
-                cancelBtn.innerText = 'Cancel';
-                cancelBtn.className = 'custom-cancel-btn text-blue-600 dark:text-blue-400 font-medium text-sm px-2 hover:opacity-80 transition-opacity whitespace-nowrap';
-                cancelBtn.onclick = (e) => {
-                  e.preventDefault(); 
-                  closeModal();
-                };
-                form.appendChild(cancelBtn);
-              }
+          // 2. Input Listeners (Icon toggle)
+          const input = form.querySelector('input');
+          if (input) {
+            input.placeholder = 'Search...';
+            input.addEventListener('input', (e: any) => {
+               if (e.target.value.length > 0) form.classList.add('has-text');
+               else form.classList.remove('has-text');
             });
-
-            // 4. Input Focus & Typing Logic
-            const input = document.querySelector('.pagefind-ui__search-input');
-            if (input) {
-              // Ensure we don't add duplicate listeners (simple check)
-              if (!input.dataset.hasListener) {
-                 input.addEventListener('input', (e) => {
-                   if (e.target.value.length > 0) {
-                     input.closest('form')?.classList.add('has-text');
-                   } else {
-                     input.closest('form')?.classList.remove('has-text');
-                   }
-                 });
-                 input.dataset.hasListener = 'true';
-              }
-            }
-          });
-
-          // Start observing the container
-          const container = document.getElementById('search-container');
-          if (container) {
-             observer.observe(container, { childList: true, subtree: true });
           }
-       }
-    }
-  }
-       }
-    }
-  }
-
-  // Run on load
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupSearch);
-  } else {
-    setupSearch();
+        }
+      }, 50);
+    });
   }
 </script>
 
 <style is:global>
-  @reference "../styles/global.css";
-  
-  /* Reset and style Pagefind UI for the modal */
-  #search-container .pagefind-ui__search-input {
-    @apply bg-gray-100 dark:bg-gray-800 border-none text-gray-900 dark:text-gray-100 placeholder-gray-400 text-base w-full rounded-xl pl-10 pr-4 py-3 focus:ring-0 shadow-inner appearance-none;
-  }
-  
-  /* Custom Icon Logic */
-  #search-container .pagefind-ui__form::before {
-    @apply absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10 content-[''];
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'%3F%3E%3C/path%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    transition: opacity 0.2s;
-  }
-  
-  /* Hide icon when input has text (using placeholder-shown trick or JS class) */
-  #search-container .pagefind-ui__search-input:not(:placeholder-shown) ~ .pagefind-ui__form::before {
-     /* This sibling selector won't work easily because input is inside form. 
-        We rely on the input styling itself or the form class we added in JS.
-     */
+  /* Base Styles for Pagefind Container */
+  #pagefind-root {
+    --pagefind-ui-scale: 1;
+    --pagefind-ui-primary: #3b82f6;
+    --pagefind-ui-text: #374151;
+    --pagefind-ui-background: #ffffff;
+    --pagefind-ui-border: #f3f4f6;
+    --pagefind-ui-tag: #f3f4f6;
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 0.75rem;
+    --pagefind-ui-image-border-radius: 0.75rem;
+    --pagefind-ui-image-box-ratio: 3 / 2;
+    --pagefind-ui-font: 'Inter', sans-serif;
   }
 
-  /* Make sure form has relative positioning for the icon */
-  /* Make sure form has relative positioning for the icon */
-  /* Make sure form has relative positioning for the icon */
-  #search-container .pagefind-ui__form {
-    @apply relative flex-1 w-full;
-  }
-  
-  /* Nuclear option layout reset with high specificity */
-  body #search-container .pagefind-ui {
-    display: block !important;
-    grid-template-columns: none !important;
-    grid-template-rows: none !important;
-    flex-direction: column !important;
+  /* Dark Mode Variables */
+  :root.dark #pagefind-root {
+    --pagefind-ui-text: #e5e7eb;
+    --pagefind-ui-background: #111827;
+    --pagefind-ui-border: #1f2937;
+    --pagefind-ui-tag: #1f2937;
   }
 
-  body #search-container .pagefind-ui__form {
-    display: flex !important; /* Keep flex for input+cancel alignment */
+  /* 
+   * CRITICAL LAYOUT OVERRIDES 
+   * Making sure Form is Row and Drawer is Column/Block
+   */
+  #pagefind-root .pagefind-ui {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  /* Form: Input + Cancel Button */
+  #pagefind-root .pagefind-ui__form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    position: relative;
+  }
+  
+  /* Input Field Styling */
+  #pagefind-root .pagefind-ui__search-input {
+    flex: 1;
+    background-color: #f3f4f6 !important; /* bg-gray-100 */
+    border: none !important;
+    padding: 0.75rem 1rem 0.75rem 2.5rem !important; /* Left padding for icon */
+    border-radius: 0.75rem !important;
+    font-size: 1rem !important;
+    line-height: normal !important;
+    color: #1f2937 !important;
     width: 100% !important;
-    position: relative !important;
-    flex-wrap: nowrap !important;
+    box-shadow: none !important;
+  }
+  :root.dark #pagefind-root .pagefind-ui__search-input {
+    background-color: #1f2937 !important; /* bg-gray-800 */
+    color: #f3f4f6 !important;
+  }
+  
+  /* Focus State */
+  #pagefind-root .pagefind-ui__search-input:focus {
+    outline: 2px solid rgba(59, 130, 246, 0.5) !important;
   }
 
-  body #search-container .pagefind-ui__drawer {
-    display: block !important;
-    width: 100% !important;
-    position: static !important;
-    margin-top: 16px !important;
-    clear: both !important;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-    @apply border-t border-gray-100 dark:border-gray-800 max-h-[60vh] overflow-y-auto;
-  }
-
-  /* Hide default clear button */
-  #search-container .pagefind-ui__search-clear {
+  /* Clear Button (Hidden) */
+  #pagefind-root .pagefind-ui__search-clear {
     display: none !important;
   }
 
-  /* Hide Pagefind's default icon if they use one */
-  #search-container .pagefind-ui__search-input::-webkit-search-decoration,
-  #search-container .pagefind-ui__search-input::-webkit-search-cancel-button,
-  #search-container .pagefind-ui__search-input::-webkit-search-results-button,
-  #search-container .pagefind-ui__search-input::-webkit-search-results-decoration {
-    display: none;
-  }
-  
-  #search-container .pagefind-ui__drawer {
-    @apply border-t border-gray-100 dark:border-gray-800 mt-4 max-h-[60vh] overflow-y-auto;
+  /* Custom Search Icon (Pseudo-element) */
+  #pagefind-root .pagefind-ui__form::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'%3F%3E%3C/path%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 10;
   }
 
-  #search-container .pagefind-ui__result {
-    @apply border-b border-gray-50 dark:border-gray-800/50 py-3 px-2 first:pt-0;
+  /* Hide Icon when typing (optional specific logic removed for simplicity, 
+     but kept the left padding so icon is always visible like Apple Spotlight) 
+  */
+
+  /* Results Drawer */
+  #pagefind-root .pagefind-ui__drawer {
+    width: 100% !important;
+    position: static !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    margin-top: 0 !important;
+    max-height: 60vh;
+    overflow-y: auto;
   }
 
-  /* Make mark text (highlighted) nice */
-  #search-container mark {
-    @apply bg-yellow-200 dark:bg-yellow-500/30 text-gray-900 dark:text-gray-100 rounded px-0.5;
+  /* Result Item */
+  #pagefind-root .pagefind-ui__result {
+    border-bottom: 1px solid #f3f4f6 !important;
+    padding: 0.75rem 0 !important;
+  }
+  :root.dark #pagefind-root .pagefind-ui__result {
+    border-color: #1f2937 !important;
+  }
+
+  /* Remove default shadows overlapping */
+  #pagefind-root .pagefind-ui__result-thumb { 
+    display: none; /* User previously said showImages: false, double check */
   }
 </style>
