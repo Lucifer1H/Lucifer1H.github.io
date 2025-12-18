@@ -1,0 +1,50 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<Layout title="Blog | Lucifer1H">
+	<section class="max-w-4xl mx-auto">
+    <div class="mb-12 text-center">
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">All Posts</h1>
+      <p class="text-gray-500 dark:text-gray-400">
+        Thinking out loud and sharing my journey.
+      </p>
+    </div>
+
+		<div class="space-y-12">
+      {posts.map((post) => (
+        <article class="flex flex-col sm:flex-row gap-6 sm:gap-8 group">
+          <div class="sm:w-32 shrink-0">
+            <time datetime={post.data.pubDate.toISOString()} class="text-sm text-gray-400 dark:text-gray-500 font-mono">
+              {post.data.pubDate.toLocaleDateString('en-us', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+              })}
+            </time>
+          </div>
+          <div class="space-y-2">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              <a href={`/blog/${post.slug}/`}>
+                {post.data.title}
+              </a>
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400">
+              {post.data.description || 'No description provided.'}
+            </p>
+            <div class="flex gap-2">
+              {post.data.tags.map((tag) => (
+                <span class="text-xs text-gray-500 dark:text-gray-500">#{tag}</span>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))}
+		</div>
+	</section>
+</Layout>

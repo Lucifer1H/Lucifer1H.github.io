@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Latest 5 posts
+const latestPosts = posts.slice(0, 5);
+---
+
+<Layout title="Lucifer1H">
+  <!-- Hero Section -->
+  <section class="relative py-20 overflow-hidden">
+    <div class="absolute inset-0 -z-10 opacity-30 dark:opacity-20 pointer-events-none">
+      <div class="absolute top-0 right-0 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+      <div class="absolute top-0 left-0 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+    </div>
+
+    <div class="text-center max-w-2xl mx-auto space-y-6">
+      <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100">
+        Hello, <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">World!</span> 👋
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+        Welcome to my digital garden. <br class="hidden sm:block" />
+        I share my thoughts on technology, coding, and life's little algorithms.
+      </p>
+      <div class="flex justify-center gap-4 pt-4">
+        <a href="/about" class="px-6 py-3 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-semibold hover:shadow-lg transition-transform hover:-translate-y-0.5">
+          About Me
+        </a>
+        <a href="/blog" class="px-6 py-3 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+          Read Blog
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Posts -->
+  <section class="mt-16">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+        <span class="w-2 h-8 bg-blue-600 rounded-full"></span>
+        Latest Writing
+      </h2>
+      <a href="/blog" class="text-sm font-medium text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+        View all &rarr;
+      </a>
+    </div>
+    
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-12">
+      <!-- Featured/Latest Post (Full Width) -->
+      {latestPosts.length > 0 && (
+        <article class="col-span-full sm:col-span-2 lg:col-span-8 p-8 bg-white dark:bg-gray-900 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md hover:border-blue-100 dark:hover:border-blue-900/50 transition-all duration-300 group">
+          <div class="flex flex-col h-full justify-between">
+            <div class="space-y-4">
+              <div class="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
+                <time datetime={latestPosts[0].data.pubDate.toISOString()} class="font-mono">
+                  {latestPosts[0].data.pubDate.toLocaleDateString('en-us', { month: 'short', day: 'numeric', year: 'numeric' })}
+                </time>
+                <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                <span>Featured</span>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <a href={`/blog/${latestPosts[0].slug}/`}>
+                  {latestPosts[0].data.title}
+                </a>
+              </h3>
+              <p class="text-gray-600 dark:text-gray-400 line-clamp-3 leading-relaxed">
+                {latestPosts[0].data.description}
+              </p>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-2">
+              {latestPosts[0].data.tags.map((tag) => (
+                <span class="px-3 py-1 text-xs font-medium rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </article>
+      )}
+
+      <!-- Other Posts (Side/Grid) -->
+      {latestPosts.slice(1).map((post) => (
+        <article class="col-span-full sm:col-span-1 lg:col-span-4 p-6 bg-white dark:bg-gray-900 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md hover:border-blue-100 dark:hover:border-blue-900/50 transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <div class="text-sm text-gray-400 dark:text-gray-500 font-mono mb-3">
+              {post.data.pubDate.toLocaleDateString('en-us', { month: 'short', day: 'numeric' })}
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+              <a href={`/blog/${post.slug}/`}>
+                {post.data.title}
+              </a>
+            </h3>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+             {post.data.tags.slice(0, 2).map((tag) => (
+              <span class="text-xs text-gray-500 dark:text-gray-400 border border-gray-100 dark:border-gray-800 px-2 py-0.5 rounded-md">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>

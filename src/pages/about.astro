@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About Me | Lucifer1H">
+	<div class="prose prose-lg dark:prose-invert mx-auto">
+		<h1 class="mb-8">About Me</h1>
+
+    <div class="grid md:grid-cols-2 gap-8 not-prose">
+      <div class="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-2xl border border-blue-100 dark:border-blue-800">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
+          <span class="mr-2">💻</span> Languages
+        </h2>
+        <ul class="space-y-2">
+          <li class="flex items-center text-gray-700 dark:text-gray-300">
+            <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+            Python
+          </li>
+          <li class="flex items-center text-gray-700 dark:text-gray-300">
+            <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+            Markdown
+          </li>
+        </ul>
+      </div>
+
+      <div class="p-6 bg-purple-50 dark:bg-purple-900/20 rounded-2xl border border-purple-100 dark:border-purple-800">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
+          <span class="mr-2">🛠️</span> Tools
+        </h2>
+        <ul class="space-y-2">
+          <li class="flex items-center text-gray-700 dark:text-gray-300">
+            <span class="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>
+            GitHub
+          </li>
+          <li class="flex items-center text-gray-700 dark:text-gray-300">
+            <span class="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>
+            VS Code
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 text-gray-600 dark:text-gray-400">
+      <p>
+        Welcome to my blog! I'm a developer passionate about coding and sharing knowledge.
+      </p>
+    </div>
+	</div>
+</Layout>
