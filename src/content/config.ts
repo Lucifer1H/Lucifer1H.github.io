@@ -21,7 +21,7 @@ const resources = defineCollection({
     schema: z.object({
         title: z.string(),
         description: z.string(),
-        link: z.string().url(),
+        link: z.string(),
         icon: z.string().optional(), // Emoji or image path
         tags: z.array(z.string()).default([]),
     }),
