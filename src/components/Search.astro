@@ -111,29 +111,27 @@
             showImages: false 
           });
 
-          // Wait for DOM to update then modify form
-          setTimeout(() => {
-            // === NUCLEAR LAYOUT FIX: Force vertical layout via inline styles ===
+          // Use MutationObserver to enforce layout and inject elements persistently
+          const observer = new MutationObserver((mutations) => {
+            // 1. Enforce Vertical Layout on Container
             const pagefindUI = document.querySelector('.pagefind-ui');
             if (pagefindUI) {
-              pagefindUI.style.display = 'block';
-              pagefindUI.style.gridTemplateColumns = 'none';
-              pagefindUI.style.gridTemplateRows = 'none';
+               pagefindUI.style.display = 'flex';
+               pagefindUI.style.flexDirection = 'column';
+               pagefindUI.style.gap = '1rem';
             }
 
+            // 2. Fix Drawer (Results) Positioning
             const drawer = document.querySelector('.pagefind-ui__drawer');
             if (drawer) {
-              drawer.style.display = 'block';
-              drawer.style.width = '100%';
-              drawer.style.position = 'static';
-              drawer.style.marginTop = '16px';
-              drawer.style.clear = 'both';
-              drawer.style.left = 'auto';
-              drawer.style.top = 'auto';
-              drawer.style.transform = 'none';
+               drawer.style.position = 'static';
+               drawer.style.width = '100%';
+               drawer.style.height = 'auto';
+               drawer.style.transform = 'none';
+               drawer.style.order = '10'; // Ensure it stays at bottom
             }
-            // === END NUCLEAR LAYOUT FIX ===
 
+            // 3. Fix Form and Inject Cancel Button
             const forms = document.querySelectorAll('.pagefind-ui__form');
             forms.forEach(form => {
               form.style.display = 'flex';
@@ -141,13 +139,12 @@
               form.style.gap = '8px';
               form.style.width = '100%';
               form.style.position = 'relative';
-              form.style.flexWrap = 'nowrap';
 
-              // Check if cancel btn already exists
+              // Inject Cancel Button if missing
               if (!form.querySelector('.custom-cancel-btn')) {
                 const cancelBtn = document.createElement('button');
                 cancelBtn.innerText = 'Cancel';
-                cancelBtn.className = 'custom-cancel-btn text-blue-600 dark:text-blue-400 font-medium text-sm px-2 hover:opacity-80 transition-opacity';
+                cancelBtn.className = 'custom-cancel-btn text-blue-600 dark:text-blue-400 font-medium text-sm px-2 hover:opacity-80 transition-opacity whitespace-nowrap';
                 cancelBtn.onclick = (e) => {
                   e.preventDefault(); 
                   closeModal();
@@ -156,19 +153,31 @@
               }
             });
 
-            // Input logic
+            // 4. Input Focus & Typing Logic
             const input = document.querySelector('.pagefind-ui__search-input');
             if (input) {
-              const handleInput = (e) => {
-                if (e.target.value.length > 0) {
-                  input.closest('form')?.classList.add('has-text');
-                } else {
-                  input.closest('form')?.classList.remove('has-text');
-                }
-              };
-              input.addEventListener('input', handleInput);
+              // Ensure we don't add duplicate listeners (simple check)
+              if (!input.dataset.hasListener) {
+                 input.addEventListener('input', (e) => {
+                   if (e.target.value.length > 0) {
+                     input.closest('form')?.classList.add('has-text');
+                   } else {
+                     input.closest('form')?.classList.remove('has-text');
+                   }
+                 });
+                 input.dataset.hasListener = 'true';
+              }
             }
-          }, 100);
+          });
+
+          // Start observing the container
+          const container = document.getElementById('search-container');
+          if (container) {
+             observer.observe(container, { childList: true, subtree: true });
+          }
+       }
+    }
+  }
        }
     }
   }
