@@ -1,0 +1,110 @@
+---
+interface Props {
+    headings: { depth: number; slug: string; text: string }[];
+}
+
+const { headings } = Astro.props;
+---
+
+<nav
+    class="toc-container hidden lg:block sticky top-24 max-h-[80vh] overflow-y-auto pr-4"
+>
+    <h2
+        class="text-sm font-bold text-gray-900 dark:text-gray-100 mb-4 uppercase tracking-wider"
+    >
+        On this page
+    </h2>
+    <ul class="space-y-2 border-l border-gray-200 dark:border-gray-800">
+        {
+            headings.map((heading) => (
+                <li class={`toc-item depth-${heading.depth} pl-4 relative`}>
+                    <a
+                        href={`#${heading.slug}`}
+                        class="block text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1"
+                    >
+                        {heading.text}
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</nav>
+
+<script>
+    // Logic to highlight active ToC item on scroll
+    function initToC() {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute("id");
+                        if (id) {
+                            document
+                                .querySelectorAll(".toc-item a")
+                                .forEach((link) => {
+                                    link.classList.remove(
+                                        "text-blue-600",
+                                        "dark:text-blue-400",
+                                        "font-medium",
+                                    );
+                                    link.classList.add(
+                                        "text-gray-500",
+                                        "dark:text-gray-400",
+                                    );
+
+                                    if (
+                                        link.getAttribute("href") === `#${id}`
+                                    ) {
+                                        link.classList.remove(
+                                            "text-gray-500",
+                                            "dark:text-gray-400",
+                                        );
+                                        link.classList.add(
+                                            "text-blue-600",
+                                            "dark:text-blue-400",
+                                            "font-medium",
+                                        );
+                                        // Also add left border highlight via parent if desired
+                                    }
+                                });
+                        }
+                    }
+                });
+            },
+            { rootMargin: "-100px 0px -66% 0px" },
+        ); // Trigger when section is near top
+
+        document
+            .querySelectorAll("h1[id], h2[id], h3[id]")
+            .forEach((section) => {
+                observer.observe(section);
+            });
+    }
+
+    // Run on load and view transition
+    initToC();
+    document.addEventListener("astro:page-load", initToC);
+</script>
+
+<style>
+    .depth-1 {
+        margin-left: 0;
+    }
+    .depth-2 {
+        margin-left: 0;
+    }
+    .depth-3 {
+        margin-left: 0.75rem;
+    }
+
+    /* Active indicator line could be done with pseudo element on li */
+    .toc-item a.text-blue-600::before {
+        content: "";
+        position: absolute;
+        left: -1px;
+        top: 0.25rem;
+        bottom: 0.25rem;
+        width: 2px;
+        background-color: #3b82f6;
+    }
+</style>
