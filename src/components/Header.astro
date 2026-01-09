@@ -1,11 +1,19 @@
 ---
-import Search from './Search.astro';
+import Search from "./Search.astro";
 ---
-<header class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 transition-colors duration-300">
-  <nav class="w-full px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+
+<header
+  class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 transition-colors duration-300"
+>
+  <nav
+    class="w-full px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+  >
     <div class="flex items-center">
-      <a href="/" class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 transition-all">
-        Lucifer1H
+      <a
+        href="/"
+        class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 transition-all"
+      >
+        Lucifer H
       </a>
     </div>
 
@@ -13,43 +21,87 @@ import Search from './Search.astro';
     <div class="flex items-center gap-4">
       {/* Desktop Links (Hidden on Mobile) */}
       <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
-        <a href="/" class="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</a>
-        <a href="/blog" class="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Blog</a>
-        <a href="/resources" class="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Resources</a>
-        <a href="/about" class="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">About</a>
+        <a
+          href="/"
+          class="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          >首页</a
+        >
+        <a
+          href="/blog"
+          class="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          >博客</a
+        >
+        <a
+          href="/resources"
+          class="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          >资源</a
+        >
+        <a
+          href="/about"
+          class="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          >关于</a
+        >
       </div>
 
       <Search />
 
       {/* Mobile Menu Button */}
-      <button 
-        id="mobile-menu-btn" 
+      <button
+        id="mobile-menu-btn"
         class="md:hidden p-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 focus:outline-none rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         aria-label="Toggle Menu"
       >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </button>
     </div>
   </nav>
 
   {/* Mobile Menu Dropdown */}
-  <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 w-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-lg transition-all duration-300 origin-top">
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden absolute top-16 left-0 w-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-lg transition-all duration-300 origin-top"
+  >
     <div class="px-4 py-4 space-y-3 flex flex-col text-sm font-medium">
-      <a href="/" class="block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400">Home</a>
-      <a href="/blog" class="block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400">Blog</a>
-      <a href="/resources" class="block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400">Resources</a>
-      <a href="/about" class="block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400">About</a>
+      <a
+        href="/"
+        class="block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400"
+        >首页</a
+      >
+      <a
+        href="/blog"
+        class="block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400"
+        >博客</a
+      >
+      <a
+        href="/resources"
+        class="block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400"
+        >资源</a
+      >
+      <a
+        href="/about"
+        class="block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400"
+        >关于</a
+      >
     </div>
   </div>
 </header>
 
 <script>
-  const btn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
+  const btn = document.getElementById("mobile-menu-btn");
+  const menu = document.getElementById("mobile-menu");
 
-  btn?.addEventListener('click', () => {
-    menu?.classList.toggle('hidden');
+  btn?.addEventListener("click", () => {
+    menu?.classList.toggle("hidden");
   });
 </script>

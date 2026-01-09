@@ -2,8 +2,68 @@
 const today = new Date();
 ---
 
-<footer class="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-20 transition-colors duration-300">
-  <div class="max-w-4xl mx-auto px-4 py-8 text-center text-gray-500 dark:text-gray-400 text-sm">
-    &copy; {today.getFullYear()} Lucifer1H. All rights reserved.
+<footer
+  class="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-20 transition-colors duration-300"
+>
+  <div class="max-w-4xl mx-auto px-4 py-8 flex flex-col items-center gap-4">
+    <div class="flex gap-6 text-gray-500 dark:text-gray-400">
+      <a
+        href="https://github.com/Lucifer1H"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:text-gray-900 dark:hover:text-white transition-colors"
+        aria-label="Github"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          ><path
+            fill-rule="evenodd"
+            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+            clip-rule="evenodd"></path></svg
+        >
+      </a>
+      <a
+        href="mailto:huangqilong@example.com"
+        class="hover:text-gray-900 dark:hover:text-white transition-colors"
+        aria-label="Email"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          ><path
+            d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+          ></path><path
+            d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
+          ></path></svg
+        >
+      </a>
+      <div
+        class="relative group cursor-pointer hover:text-gray-900 dark:hover:text-white transition-colors"
+        aria-label="WeChat"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          ><path
+            d="M8.055 2.55c-3.61 0-6.426 2.483-6.426 5.67 0 1.772.88 3.36 2.316 4.402.19.138.162.274.12 4.22-.008.776.92 1.103 1.488.584 1.637-1.498 1.846-1.605 2.05-1.576.444.062.903.097 1.373.097.64 0 1.264-.065 1.863-.185-.758-3.053 1.516-6.096 4.417-6.096 0-3.96-3.79-7.116-7.201-7.116zm10.74 3.796c-3.145 0-5.746 2.215-5.746 5.099 0 2.872 2.59 5.207 5.734 5.207.394 0 .78-.035 1.155-.099.167-.03.336.059 1.636 1.258.463.425 1.22.158 1.214-.476l-.034-3.41c.01-.06.182-.196.34-.312 1.107-.82 1.76-2.072 1.76-3.468-.01-2.883-2.67-5.11-6.06-5.799z"
+          ></path></svg
+        >
+        <div
+          class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block px-2 py-1 bg-gray-900 text-white text-xs rounded whitespace-nowrap"
+        >
+          微信号: 暂未提供
+        </div>
+      </div>
+    </div>
+    <div class="text-sm text-gray-500 dark:text-gray-400">
+      &copy; {today.getFullYear()} Lucifer H. All rights reserved.
+    </div>
   </div>
 </footer>
