@@ -228,59 +228,6 @@ Oh My OpenCode内置了一个Claude Code Compatibility Layer。这意味着，�
     ```
 *   **Gemini 403错误**： 这通常意味着当前IP所在的地区不支持Gemini。请确保你的代理节点位于美国、新加坡等支持Gemini的地区。
 
-## 8. 内容创作指南：如何打造爆款图文
-
-针对小红书、微信公众号和技术博客，我们需要不同的切入点和视觉呈现。
-
-### 8.1 视觉素材描述（Visual Descriptions）
-
-为了让文章更具吸引力，建议制作以下几张配图（可截图或使用Figma重绘）：
-
-*   **图1：赛博朋克风的“驾驶舱” (The Cockpit)**
-    *   画面描述： 截取OpenCode TUI的全屏界面。左侧是黑底绿字的流动代码，右侧是那个标志性的“Check-in Panel”。在右侧面板上，用高亮红框圈出“Session Cost: $0.01”和“Context: 120k/200k”。
-    *   配文/标签： “实时监控开销，拒绝价格刺客”。
-    *   意图： 展示OpenCode的专业感和透明度，直击Claude Code用户担心的成本痛点。
-
-*   **图2：Ultrawork的“多线程”工作流**
-    *   画面描述： 终端中输入 `/ulw 重构整个鉴权模块`。下方展示出三个并行的彩色进度条或文本块。
-        *   🔵 [Librarian] 正在阅读 Auth.js 文档...
-        *   🟣 [Explore] 正在扫描 /src/utils...
-        *   🟢 正在规划架构...
-    *   配文/标签： “一行指令，召唤一支AI工程队”。
-    *   意图： 具象化“Agent编排”的概念，展示Oh My OpenCode的强大自动化能力。
-
-*   **图3：对比图——围墙 vs 集市**
-    *   画面描述： 左半边是Claude Code简洁但空洞的登录界面，打上“$20/Mo”的水印；右半边是OpenCode复杂的JSON配置文件和多彩的终端界面，打上“Free / DIY”的水印。
-    *   配文/标签： “不仅是工具的选择，更是自由的选择”。
-
-### 8.2 各平台文案策略
-
-**小红书 (Xiaohongshu)**
-
-*   **标题**：
-    *   “Claude Code太贵？这才是程序员的终极平替！💸”
-    *   “Oh My OpenCode！把AI大牛装进终端，从此告别写代码？🤯”
-    *   “保姆级教程：0成本搭建你的私人AI编程团队（支持Gemini/Claude）”
-*   **正文Hook**： 开篇直接算账。“Claude Pro一个月145块还要限流？用OpenCode+Gemini API，同样的活儿可能只要几块钱，甚至免费！”
-*   **标签**： #AI编程 #程序员日常 #OpenCode #Claude平替 #黑科技 #编程效率
-
-**微信公众号 (WeChat Official Account)**
-
-*   **标题**：
-    *   “深度解析：为什么OpenCode + Oh My OpenCode才是终端AI的终局？”
-    *   “告别Copilot：在终端里编排一支西西弗斯工程队”
-    *   “Claude Code虽好，但我选OpenCode：论AI时代的工具自由”
-*   **结构建议**：
-    1.  痛点引入： 描述Claude Code“被限流”时的绝望感。
-    2.  技术拆解： 深度介绍OpenCode的TUI架构和Oh My OpenCode的Agent编排。
-    3.  对比分析： 放入上文的5.1对比表格。
-    4.  实战教程： 详细的配置代码（Antigravity, 中文Prompt）。
-    5.  升华： 讨论从“Chat”到“Agent”的趋势。
-
-**技术博客 (Blog)**
-
-*   **标题**： “Building a Resilient AI Coding Workflow with OpenCode, Sisyphus, and Antigravity”
-*   **侧重点**： 更多代码细节，更深入的架构分析，关于Git Hook的集成，以及如何编写自定义的Agent配置文件。
 
 ## 9. 结语：拥抱混乱，拥抱力量
 
@@ -289,31 +236,3 @@ Claude Code代表了秩序，它像是一列准时但昂贵的高铁，舒适、
 对于中国开发者而言，面对复杂的网络环境和敏感的成本考量，OpenCode + Oh My OpenCode + Antigravity 的组合无疑是目前最具性价比、也最具可玩性的选择。它不仅是一个工具，更是一张通往AI Agent时代的入场券。通过掌握这套工具链，我们不再仅仅是代码的编写者，更成为了智能体的指挥官。
 
 ___
-
-### Works cited
-
-1.  opencode-ai/opencode: A powerful AI coding agent. Built for the terminal. - GitHub
-2.  opencode · GitHub Topics
-3.  CLI | OpenCode
-4.  OpenCode: The BEST AI Coding Agent Ever! BYE Gemini CLI & ClaudeCode! (Opensource)
-5.  OPENCODE - Like Claude Code or Gemini CLI, but works with local models and/or paid ones as well : r/LocalLLaMA - Reddit
-6.  OpenCode with MLX - GitHub Gist
-7.  Intro | OpenCode
-8.  code-yeongyu/oh-my-opencode: The Best Agent Harness ... - GitHub
-9.  oh-my-opencode · GitHub Topics
-10. Oh My OpenCode - 一个基于OpenCode 生态的智能代码生成与开发 ...
-11. oh-my-opencode - NPM
-12. marcusquinn/aidevops: AI DevOps gives you and your AI assistant the superpowers of managed infrastructure with AI chat - GitHub
-13. From my view Point: OpenCode vs. Claude Code-A Quick Comparison · AI Automation Society - Skool
-14. Comparing Claude Code vs OpenCode (and testing different models) - Andrea Grandi
-15. Opencode is twice as good as claude code! Did anybody noticed? : r/ClaudeAI - Reddit
-16. About Claude's Pro Plan Usage
-17. Using Claude Code with your Pro or Max plan
-18. Should I switch from claude max ($100) to usage-based (api key)? : r/ClaudeCode - Reddit
-19. Claude Code not included in the Pro Plan? : r/ClaudeAI - Reddit
-20. cost of usage "claude code" : r/ClaudeAI - Reddit
-21. Claude Pricing: A 2025 Guide To Anthropic AI Costs - CloudZero
-22. Claude Pricing Explained: Subscription Plans & API Costs - IntuitionLabs
-23. opencode config - GitHub Gist
-24. awesome-ChatGPT-repositories/docs/README.en.md at main - GitHub
-25. [BUG] Can't attach screenshots #3659 - anomalyco/opencode - GitHub
